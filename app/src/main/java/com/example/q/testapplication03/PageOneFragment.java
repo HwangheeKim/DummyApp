@@ -96,67 +96,6 @@ public class PageOneFragment extends Fragment {
         }
     }
 
-    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                             Bundle savedInstanceState) {
-//        // Inflate the layout for this fragment
-//        final View view = inflater.inflate(R.layout.fragment_page_one, container, false);
-//        ImageAdapter adapter = new ImageAdapter();
-//
-//        GridView gridView = (GridView) view.findViewById(R.id.gallery_gridview);
-//        gridView.setAdapter(adapter);
-//
-//        adapter.addItem(R.drawable.img01, "test1");
-//        adapter.addItem(R.drawable.img02, "test2");
-//        adapter.addItem(R.drawable.img03, "test3");
-//        adapter.addItem(R.drawable.img04, "test4");
-//        adapter.addItem(R.drawable.img05, "test5");
-//        adapter.addItem(R.drawable.img06, "test6");
-//
-////        String url = "http://52.78.52.132:3000/images";
-//        String url = "http://143.248.49.122:3000/images";
-//
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    URL u = new URL("http://143.248.49.122:3000/images");
-//
-//                    Drawable drawable = getResources().getDrawable(R.drawable.img01);
-//                    Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
-//                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-//                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-//                    byte[] bitmapData = stream.toByteArray();
-//
-//                    HttpURLConnection huc = (HttpURLConnection) u.openConnection();
-//                    huc.setRequestMethod("POST");
-//                    huc.setDoInput(true);
-//                    huc.setDoOutput(true);
-//                    huc.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-//                    huc.setRequestProperty("Filename", "something.jpg");
-//                    OutputStream os = huc.getOutputStream();
-//                    os.write(bitmapData);
-//                    os.flush();
-//                    os.close();
-//
-//                    BufferedReader br = new BufferedReader(new InputStreamReader(huc.getInputStream(), "UTF-8"),
-//                            huc.getContentLength());
-//
-//                    String buf;
-//                    while ((buf=br.readLine()) != null) {
-//                        Log.d("SOMETHING!!", buf);
-//                    }
-//                    br.close();
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }).start();
-//
-//        return view;
-//    }
-
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -184,6 +123,7 @@ public class PageOneFragment extends Fragment {
 
         Ion.with(view.getContext())
                 .load(url)
+                .setHeader("last_update", "I don't know")
                 .setMultipartFile("userFile", "image/jpeg", fileToUpload)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
