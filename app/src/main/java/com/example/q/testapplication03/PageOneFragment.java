@@ -112,8 +112,13 @@ public class PageOneFragment extends Fragment {
         adapter.addItem(R.drawable.img05, "test5");
         adapter.addItem(R.drawable.img06, "test6");
 
-        String url = "http://52.78.52.132:3000/images";
-//        String url = "http://143.248.49.122:3000/images";
+
+        return view;
+    }
+
+    public void postPicture(final View view) {
+        String url = "http://52.78.52.132:3000/images";     // AWS
+//        String url = "http://143.248.49.122:3000/images";   // N1
 
         final String filePath = Environment.getExternalStorageDirectory().toString() + "/DCIM/Camera";
         final String fileName = "2016-12-25-12-16-43.jpg";
@@ -123,6 +128,7 @@ public class PageOneFragment extends Fragment {
 
         Ion.with(view.getContext())
                 .load(url)
+                .setHeader("name", "something")
                 .setHeader("last_update", "I don't know")
                 .setMultipartFile("userFile", "image/jpeg", fileToUpload)
                 .asJsonObject()
@@ -137,8 +143,6 @@ public class PageOneFragment extends Fragment {
                         Toast.makeText(view.getContext(), "File upload complete", Toast.LENGTH_SHORT).show();
                     }
                 });
-
-        return view;
     }
 
 
