@@ -24,6 +24,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
@@ -112,8 +113,36 @@ public class PageOneFragment extends Fragment {
         adapter.addItem(R.drawable.img05, "test5");
         adapter.addItem(R.drawable.img06, "test6");
 
+        // TODO : These two methods
+        getPictureList(view);
+        getPicture(view);
 
         return view;
+    }
+
+    public void getPictureList(final View view) {
+        String url = "http://52.78.52.132:3000/images_list";     // AWS
+//        String url = "http://143.248.49.122:3000/images_list";   // N1
+
+        Ion.with(view.getContext())
+                .load(url)
+                .asJsonArray()
+                .setCallback(new FutureCallback<JsonArray>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonArray result) {
+                        if(e != null) {
+                            Toast.makeText(view.getContext(), "Error while getting the list", Toast.LENGTH_SHORT).show();
+                            e.printStackTrace();
+                            return;
+                        }
+                        Toast.makeText(view.getContext(), "List downloaded", Toast.LENGTH_SHORT).show();
+                        Log.d("HERE", result.toString());
+                    }
+                });
+    }
+
+    public void getPicture(final View view) {
+        // TODO : Put this functionality in the adapter
     }
 
     public void postPicture(final View view) {
@@ -129,6 +158,7 @@ public class PageOneFragment extends Fragment {
         Ion.with(view.getContext())
                 .load(url)
                 .setHeader("name", "something")
+                // TODO : How to get the last modified time of the file?
                 .setHeader("last_update", "I don't know")
                 .setMultipartFile("userFile", "image/jpeg", fileToUpload)
                 .asJsonObject()
